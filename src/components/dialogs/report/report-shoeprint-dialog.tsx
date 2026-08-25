@@ -174,20 +174,31 @@ export function ReportShoeprintDialog({
                                     : <strong>{rightCount}</strong>
                                 </div>
                                 <div>
-                                    {t("Shoeprint paired features count", { ns: "report" })}: <strong>{pairedCount}</strong>
+                                    {t("Shoeprint paired features count", {
+                                        ns: "report",
+                                    })}
+                                    : <strong>{pairedCount}</strong>
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-1 gap-3">
                                 <div className="flex flex-col gap-1.5">
-                                    <label htmlFor="shoeprint-report-title" className="text-sm font-medium">
+                                    <label
+                                        htmlFor="shoeprint-report-title"
+                                        className="text-sm font-medium"
+                                    >
                                         {t("Report title", { ns: "keywords" })}
                                     </label>
                                     <Input
                                         id="shoeprint-report-title"
                                         value={reportTitle}
-                                        onChange={e => setReportTitle(e.target.value)}
-                                        placeholder={t("Shoeprint report title", { ns: "report" })}
+                                        onChange={e =>
+                                            setReportTitle(e.target.value)
+                                        }
+                                        placeholder={t(
+                                            "Shoeprint report title",
+                                            { ns: "report" }
+                                        )}
                                     />
                                 </div>
                                 <div className="flex flex-col gap-1.5">
@@ -211,16 +222,34 @@ export function ReportShoeprintDialog({
                                 </div>
 
                                 <div className="flex flex-col gap-1.5">
-                                    <label className="text-sm font-medium">
-                                        {t("Unique features color", { ns: "keywords" })}
+                                    <label
+                                        htmlFor="shoeprint-unique-color"
+                                        className="text-sm font-medium"
+                                    >
+                                        {t("Unique features color", {
+                                            ns: "keywords",
+                                        })}
                                     </label>
                                     <select
+                                        id="shoeprint-unique-color"
                                         className="h-10 rounded-md border border-input bg-background px-3 text-sm"
                                         value={uniqueColor}
-                                        onChange={e => setUniqueColor(e.target.value as "red" | "green")}
+                                        onChange={e =>
+                                            setUniqueColor(
+                                                e.target.value as
+                                                    | "red"
+                                                    | "green"
+                                            )
+                                        }
                                     >
-                                        <option value="red">{t("Color red", { ns: "keywords" })}</option>
-                                        <option value="green">{t("Color green", { ns: "keywords" })}</option>
+                                        <option value="red">
+                                            {t("Color red", { ns: "keywords" })}
+                                        </option>
+                                        <option value="green">
+                                            {t("Color green", {
+                                                ns: "keywords",
+                                            })}
+                                        </option>
                                     </select>
                                 </div>
 

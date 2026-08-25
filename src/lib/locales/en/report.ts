@@ -64,10 +64,8 @@ const d: Dictionary = {
         "Structural features of classificatory significance",
     "Shoeprint group features title":
         "Group features of classificatory significance",
-    "Shoeprint feature type prefix": 
-        "Feature type:",
-    "Shoeprint no unique features": 
-        "No unique features found.",
+    "Shoeprint feature type prefix": "Feature type:",
+    "Shoeprint no unique features": "No unique features found.",
 };
 
 export default d;
