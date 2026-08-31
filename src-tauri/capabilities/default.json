@@ -59,34 +59,44 @@
         "dialog:allow-ask",
         "dialog:allow-confirm",
         {
-            "identifier": "shell:allow-execute",
-            "allow": [
-                {
-                    "name": "bin/sourceafis_cli",
-                    "sidecar": true,
-                    "args": true
-                },
-                {
-                    "name": "bin/pyfing_enhance",
-                    "sidecar": true,
-                    "args": true
-                }
-            ]
+          "identifier": "shell:allow-execute",
+          "allow": [
+            {
+              "name": "bin/sourceafis_cli",
+              "sidecar": true,
+              "args": true
+            },
+            {
+              "name": "bin/pyfing_enhance",
+              "sidecar": true,
+              "args": true
+            },
+            {
+              "name": "bin/sourceafis_matcher",
+              "sidecar": true,
+              "args": true
+            }
+          ]
         },
         {
-            "identifier": "shell:allow-spawn",
-            "allow": [
-                {
-                    "name": "bin/sourceafis_cli",
-                    "sidecar": true,
-                    "args": true
-                },
-                {
-                    "name": "bin/pyfing_enhance",
-                    "sidecar": true,
-                    "args": true
-                }
-            ]
+          "identifier": "shell:allow-spawn",
+          "allow": [
+            {
+              "name": "bin/sourceafis_cli",
+              "sidecar": true,
+              "args": true
+            },
+            {
+              "name": "bin/pyfing_enhance",
+              "sidecar": true,
+              "args": true
+            },
+            {
+              "name": "bin/sourceafis_matcher",
+              "sidecar": true,
+              "args": true
+            }
+          ]
         },
         "store:default",
         "dialog:default",
