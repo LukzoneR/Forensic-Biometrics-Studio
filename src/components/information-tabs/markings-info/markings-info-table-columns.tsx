@@ -132,6 +132,7 @@ export const useColumns = (
                                             size="sm-icon"
                                             variant="outline"
                                             pressed={false}
+                                            className="text-inherit border-current/25 hover:bg-background/20 hover:text-inherit"
                                             onClickCapture={() =>
                                                 handleRemoveClick(
                                                     marking as MarkingClass
@@ -139,7 +140,7 @@ export const useColumns = (
                                             }
                                         >
                                             <Trash2
-                                                className="hover:text-destructive"
+                                                className="hover:text-destructive transition-colors"
                                                 size={ICON.SIZE}
                                                 strokeWidth={ICON.STROKE_WIDTH}
                                             />
@@ -148,7 +149,7 @@ export const useColumns = (
                                             title="Merge"
                                             size="sm-icon"
                                             variant="outline"
-                                            className="ml-2 py-0"
+                                            className="ml-2 py-0 text-inherit border-current/25 hover:bg-background/20 hover:text-inherit"
                                             pressed={!!isPendingHere}
                                             disabled={hasCounterpart}
                                             onClickCapture={() =>
@@ -160,7 +161,7 @@ export const useColumns = (
                                             <Link2
                                                 className={
                                                     isPendingHere
-                                                        ? "text-green-500"
+                                                        ? "text-emerald-400 font-bold"
                                                         : ""
                                                 }
                                                 size={ICON.SIZE}

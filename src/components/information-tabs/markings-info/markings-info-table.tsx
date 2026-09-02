@@ -85,10 +85,11 @@ const TableRowComponent = <TData,>(rows: Row<TData>[], canvasId: CANVAS_ID) => {
                 ref={ref}
                 key={row.id}
                 className={cn(
-                    "last:border-b-0 cursor-pointer transition-colors hover:bg-accent/45",
-                    isSelected && "bg-accent/75"
+                    "last:border-b-0 cursor-pointer transition-colors hover:bg-accent/25 group/tablerow",
+                    isSelected &&
+                        "bg-accent text-accent-foreground font-medium hover:bg-accent"
                 )}
-                data-state={isSelected && "selected"}
+                data-state={isSelected ? "selected" : undefined}
                 onClickCapture={() => {
                     if (selectedMarkingLabel === marking.label) {
                         MarkingsStore(
@@ -116,7 +117,11 @@ const TableRowComponent = <TData,>(rows: Row<TData>[], canvasId: CANVAS_ID) => {
                         style={{ width: cell.column.getSize() }}
                         className={cn(
                             cell.column.id === "actions" &&
-                                "sticky left-0 bg-card z-10"
+                                "sticky left-0 z-10",
+                            cell.column.id === "actions" &&
+                                (isSelected
+                                    ? "bg-accent text-accent-foreground"
+                                    : "bg-card group-hover/tablerow:bg-accent/25")
                         )}
                     >
                         {flexRender(

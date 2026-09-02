@@ -46,7 +46,7 @@ const MenubarTrigger = React.forwardRef<
             "px-3 py-1.5 rounded-md transition-colors duration-150",
             "hover:bg-accent/80 hover:text-accent-foreground",
             "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-            "data-[state=open]:bg-accent/80"
+            "data-[state=open]:bg-accent/80 data-[state=open]:text-accent-foreground"
         )}
         {...props}
     />
@@ -83,7 +83,7 @@ const MenubarCheckboxItem = React.forwardRef<
             "px-2.5 py-2 rounded-md select-none cursor-pointer",
             "transition-colors duration-150",
             "hover:bg-accent/90 hover:text-accent-foreground",
-            "focus:outline-none focus:bg-accent/90",
+            "focus:outline-none focus:bg-accent/90 focus:text-accent-foreground",
             className
         )}
         {...props}
@@ -109,7 +109,7 @@ const MenubarSubTrigger = React.forwardRef<
             "flex space-x-5 items-center justify-between select-none",
             "px-2.5 py-2 rounded-md transition-colors duration-150",
             "hover:bg-accent/90 hover:text-accent-foreground",
-            "focus:outline-none focus:bg-accent/90",
+            "focus:outline-none focus:bg-accent/90 focus:text-accent-foreground",
             className
         )}
         {...props}

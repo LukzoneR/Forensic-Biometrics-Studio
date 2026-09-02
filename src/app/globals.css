@@ -10,7 +10,7 @@
         --ring: 124 28% 56%;
         --input: 124 17.99% 69.36%;
         --muted: 124 26.94% 83.15%;
-        --accent: 159 51.92% 74.94%;
+        --accent: 159 55% 30%;
         --border: 124 31.17% 37.73%;
         --popover: 124 65% 83%;
         --primary: 124 41% 56%;
@@ -21,7 +21,7 @@
         --destructive: 12.78 83.18% 37.23%;
         --card-foreground: 120 31.03% 5.69%;
         --muted-foreground: 120 2.85% 35.9%;
-        --accent-foreground: 159 33% 10.66%;
+        --accent-foreground: 0 0% 100%;
         --popover-foreground: 124 33% 43%;
         --primary-foreground: 124 33% 5.6%;
         --secondary-foreground: 124 33% 5.69%;
@@ -38,7 +38,7 @@
         --ring: 124 41% 56%;
         --input: 124 14.72% 34.42%;
         --muted: 124 40% 11.72%;
-        --accent: 158 46.27% 21.21%;
+        --accent: 158 45% 42%;
         --border: 124 14.72% 34.42%;
         --popover: 124 39.15% 14.56%;
         --primary: 124 41% 56%;
@@ -48,7 +48,7 @@
         --destructive: 12.78 48.06% 59.52%;
         --card-foreground: 124 31% 97.8%;
         --muted-foreground: 124 10.46% 57.62%;
-        --accent-foreground: 159 31% 97.8%;
+        --accent-foreground: 124 33% 5.6%;
         --popover-foreground: 124 31% 97.8%;
         --primary-foreground: 124 31% 5.6%;
         --secondary-foreground: 124 31% 97.8%;
@@ -65,7 +65,7 @@
 
         --input: var(--gray-light-60);
         --muted: var(--gray-light-30);
-        --accent: var(--gray-light-30);
+        --accent: var(--gray-light-60);
         --border: var(--gray-light-40);
 
         --popover: var(--gray-dark-20);
@@ -80,7 +80,7 @@
 
         --card-foreground: var(--gray-dark-85);
         --muted-foreground: var(--white);
-        --accent-foreground: var(--gray-dark-95);
+        --accent-foreground: var(--black);
         --popover-foreground: var(--gray-dark-85);
 
         --primary-foreground: var(--white);
@@ -106,8 +106,8 @@
         --primary-foreground: var(--blue-dark-20);
         --secondary: var(--blue-light-85);
         --secondary-foreground: var(--blue-dark-20);
-        --accent: var(--blue-light-85);
-        --accent-foreground: var(--blue-dark-20);
+        --accent: var(--blue-dark-35);
+        --accent-foreground: var(--white);
         --border: var(--blue-light-80);
         --input: var(--blue-light-80);
         --ring: var(--blue-light-70);
@@ -139,8 +139,8 @@
         --ring: var(--blue-light-70);
         --muted: var(--blue-dark-40);
         --muted-foreground: var(--white);
-        --accent: var(--blue-dark-35);
-        --accent-foreground: var(--white);
+        --accent: var(--blue-light-70);
+        --accent-foreground: var(--blue-dark-15);
         --destructive: var(--red);
         --destructive-foreground: var(--white);
         --ds-background-selected: var(--blue-dark-15);
