@@ -52,6 +52,7 @@ const config = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                "table-selected": "hsl(var(--table-selected))",
             },
             borderRadius: {
                 lg: "var(--radius)",
