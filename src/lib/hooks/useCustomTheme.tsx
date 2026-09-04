@@ -3,7 +3,10 @@ import {
     CustomThemeStore,
     CustomTheme,
     ThemeColors,
+    deriveSelectedRowColors,
 } from "@/lib/stores/CustomTheme";
+
+const SELECTED_CSS_VARS = ["--selected", "--selected-foreground"] as const;
 
 const CSS_VAR_MAP: Record<keyof ThemeColors, string> = {
     primary: "--primary",
@@ -32,6 +35,9 @@ export function applyCustomTheme(theme: CustomTheme | null) {
         Object.values(CSS_VAR_MAP).forEach(cssVar => {
             root.style.removeProperty(cssVar);
         });
+        SELECTED_CSS_VARS.forEach(cssVar => {
+            root.style.removeProperty(cssVar);
+        });
         return;
     }
 
@@ -43,6 +49,13 @@ export function applyCustomTheme(theme: CustomTheme | null) {
             root.style.setProperty(cssVar, value);
         }
     });
+
+    const selected = deriveSelectedRowColors(theme.colors.card);
+    root.style.setProperty("--selected", selected.selected);
+    root.style.setProperty(
+        "--selected-foreground",
+        selected.selectedForeground
+    );
 }
 
 export function useCustomTheme() {

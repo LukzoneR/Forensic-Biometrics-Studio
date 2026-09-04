@@ -89,6 +89,28 @@ export const THEME_COLOR_LABELS: Record<keyof ThemeColors, string> = {
     destructiveForeground: "Destructive Foreground",
 };
 
+/** Selected row fill/text targeting WCAG 2.1 1.4.11 (≥3:1 vs card). */
+export function deriveSelectedRowColors(card: string): {
+    selected: string;
+    selectedForeground: string;
+} {
+    const parts = card.trim().split(/\s+/);
+    const h = parseFloat(parts[0] ?? "0") || 0;
+    const s = parseFloat(parts[1] ?? "20") || 20;
+    const l = parseFloat(parts[2] ?? "50") || 50;
+    const sat = Math.min(Math.max(s, 20), 55);
+    if (l >= 50) {
+        return {
+            selected: `${h} ${sat}% 32%`,
+            selectedForeground: `${h} 25% 96%`,
+        };
+    }
+    return {
+        selected: `${h} ${sat}% 62%`,
+        selectedForeground: `${h} 25% 10%`,
+    };
+}
+
 export function generateThemeId(): string {
     return `theme-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }

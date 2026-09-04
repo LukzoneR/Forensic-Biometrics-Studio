@@ -59,7 +59,7 @@ const TableRow = React.forwardRef<
     <tr
         ref={ref}
         className={cn(
-            "border-b transition-colors data-[state=selected]:bg-muted",
+            "group border-b transition-colors data-[state=selected]:bg-selected data-[state=selected]:text-selected-foreground data-[state=selected]:[&_button]:text-selected-foreground",
             className
         )}
         {...props}
@@ -89,7 +89,7 @@ const TableCell = React.forwardRef<
     <td
         ref={ref}
         className={cn(
-            "p-0.5 overflow-hidden text-ellipsis whitespace-nowrap align-middle",
+            "p-0.5 overflow-hidden text-ellipsis whitespace-nowrap align-middle group-data-[state=selected]:bg-selected group-data-[state=selected]:text-selected-foreground",
             className
         )}
         {...props}
