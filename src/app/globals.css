@@ -31,6 +31,8 @@
         --separator: 0 0% 9.4%;
         --glass-bg: 124 50% 95% / 0.7;
         --glass-border: 124 31.17% 37.73% / 0.3;
+        --row-selected: 124 50% 32%;
+        --row-selected-foreground: 0 0% 100%;
     }
 
     .dark {
@@ -57,6 +59,8 @@
         --separator: 0 0% 100%;
         --glass-bg: 124 26.65% 4.48% / 0.5;
         --glass-border: 124 14.72% 34.42% / 0.3;
+        --row-selected: 124 41% 45%;
+        --row-selected-foreground: 0 0% 0%;
     }
 
     .dark_gray {
@@ -92,6 +96,8 @@
         --separator: var(--gray-dark-60);
         --glass-bg: var(--gray-dark-20);
         --glass-border: var(--gray-dark-95);
+        --row-selected: 210 10% 55%;
+        --row-selected-foreground: 0 0% 0%;
     }
 
     .light_blue {
@@ -121,6 +127,8 @@
         --glass-border: var(--blue-dark-15) / 0.3;
 
         --radius: 0.5rem;
+        --row-selected: 218 45% 50%;
+        --row-selected-foreground: 0 0% 100%;
     }
     .dark_blue {
         --background: var(--blue-dark-15);
@@ -147,6 +155,8 @@
         --separator: var(--gray-dark-60);
         --glass-bg: var(--blue-dark-26);
         --glass-border: var(--blue-light-85);
+        --row-selected: 218 45% 51%;
+        --row-selected-foreground: 0 0% 100%;
     }
 }
 

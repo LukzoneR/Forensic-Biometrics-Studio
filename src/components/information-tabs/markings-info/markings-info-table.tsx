@@ -86,7 +86,8 @@ const TableRowComponent = <TData,>(rows: Row<TData>[], canvasId: CANVAS_ID) => {
                 key={row.id}
                 className={cn(
                     "last:border-b-0 cursor-pointer transition-colors hover:bg-accent/45",
-                    isSelected && "bg-accent/75"
+                    isSelected &&
+                        "bg-row-selected text-row-selected-foreground hover:bg-row-selected"
                 )}
                 data-state={isSelected && "selected"}
                 onClickCapture={() => {
