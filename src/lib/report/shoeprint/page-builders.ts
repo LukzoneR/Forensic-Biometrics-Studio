@@ -1,8 +1,18 @@
 import type { TFunction } from "i18next";
 import { MarkingType } from "@/lib/markings/MarkingType";
-import { PAGE, LANDSCAPE, IMAGE_CELL_SIZE } from "./types";
-import type { ImageMeta, PairedFeature } from "./types";
-import { renderImageWithMarkings } from "./render-utils";
+import {
+    createFigurePage,
+    createFooter,
+    createPage,
+    createReportRoot,
+    escapeHtml,
+    resolveFeatureTypeName,
+    toCssColor,
+} from "../core/dom-utils";
+import { ensureImagesLoaded } from "../core/pdf-renderer";
+import type { ImageMeta } from "../core/types";
+import { renderImageWithMarkings } from "../rendering/pixi-renderer";
+import { IMAGE_CELL_SIZE, LANDSCAPE, PAGE, type PairedFeature } from "./types";
 
 type ReportT = TFunction<"report">;
 export type GroupedByType = Map<
@@ -10,55 +20,18 @@ export type GroupedByType = Map<
     { type: MarkingType; pairs: PairedFeature[] }
 >;
 
-export const toCssColor = (value: unknown, fallback: string) => {
-    if (typeof value === "number" && Number.isFinite(value)) {
-        // eslint-disable-next-line no-bitwise
-        return `#${(value >>> 0).toString(16).padStart(6, "0").slice(-6)}`;
-    }
-    if (typeof value === "string" && value.trim().length > 0) return value;
-    return fallback;
+export {
+    createFigurePage,
+    createFooter,
+    createPage,
+    createReportRoot,
+    ensureImagesLoaded,
+    escapeHtml,
+    resolveFeatureTypeName,
+    toCssColor,
 };
 
-export const escapeHtml = (value: string) =>
-    value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-export const resolveFeatureTypeName = (
-    featureTypeDefinition: MarkingType | undefined,
-    tReport: ReportT
-) => {
-    if (!featureTypeDefinition) return "-";
-    const baseName =
-        featureTypeDefinition.displayName?.trim() ||
-        featureTypeDefinition.name?.trim() ||
-        "-";
-    return tReport(baseName as never, { defaultValue: baseName });
-};
-
-export const createFooter = (
-    pageNumber: number,
-    reportId: string,
-    tReport: ReportT
-) =>
-    `<div class="footer"><div>${tReport("Page")} ${pageNumber}</div><div>${tReport("Report ID label")} ${reportId}</div></div>`;
-
-export const createPage = () => {
-    const page = document.createElement("div");
-    page.className = "report-page";
-    return page;
-};
-
-export const createReportRoot = () => {
-    const root = document.createElement("div");
-    root.className = "report-root";
-    return root;
-};
-
-export const createStyles = () => {
+export const createStyles = (): HTMLStyleElement => {
     const style = document.createElement("style");
     style.textContent = `
         .report-root { position: fixed; left: -10000px; top: 0; width: ${PAGE.width}px; }
@@ -108,24 +81,6 @@ export const createStyles = () => {
     return style;
 };
 
-export const createFigurePage = (
-    caption: string,
-    image: string,
-    imageLabel: string,
-    pageNumber: number,
-    reportId: string,
-    tReport: ReportT
-) => {
-    const page = createPage();
-    page.innerHTML = `
-        <div class="fig-label">${imageLabel}</div>
-        <div class="fig"><img src="${image}" /></div>
-        <div class="fig-caption">${caption}</div>
-        ${createFooter(pageNumber, reportId, tReport)}
-    `;
-    return page;
-};
-
 export const createCategoryPages = async (
     grouped: GroupedByType,
     leftMeta: ImageMeta,
@@ -138,11 +93,13 @@ export const createCategoryPages = async (
 ): Promise<HTMLElement[]> => {
     const pages: HTMLElement[] = [];
     let pageNumber = startPageNumber;
+
     // eslint-disable-next-line no-restricted-syntax
     for (const { type, pairs } of grouped.values()) {
         const typeName = type.displayName ?? type.name ?? "-";
         const leftMarkings = pairs.map(p => p.left);
         const rightMarkings = pairs.map(p => p.right);
+
         // eslint-disable-next-line no-await-in-loop
         const [leftCanvas, rightCanvas] = await Promise.all([
             renderImageWithMarkings(
@@ -150,6 +107,7 @@ export const createCategoryPages = async (
                 leftMarkings,
                 markingTypes,
                 1.6,
+                undefined,
                 { showMarkingLabels: false, markingsAlpha: 0.75 }
             ),
             renderImageWithMarkings(
@@ -157,9 +115,11 @@ export const createCategoryPages = async (
                 rightMarkings,
                 markingTypes,
                 1.6,
+                undefined,
                 { showMarkingLabels: false, markingsAlpha: 0.75 }
             ),
         ]);
+
         const page = createPage();
         page.innerHTML = `
             <div class="category-title">${categoryTitle}</div>
@@ -167,11 +127,11 @@ export const createCategoryPages = async (
             <div class="type-images-grid">
                 <div class="type-image-col">
                     <div class="img-label">${tReport("Image 1")}</div>
-                    <div class="fig"><img src="${leftCanvas.toDataURL("image/png")}" /></div>
+                    <div class="fig"><img src="${leftCanvas.toDataURL("image/png")}" alt="${typeName} (left)" /></div>
                 </div>
                 <div class="type-image-col">
                     <div class="img-label">${tReport("Image 2")}</div>
-                    <div class="fig"><img src="${rightCanvas.toDataURL("image/png")}" /></div>
+                    <div class="fig"><img src="${rightCanvas.toDataURL("image/png")}" alt="${typeName} (right)" /></div>
                 </div>
             </div>
             ${createFooter(pageNumber, reportId, tReport)}
@@ -180,19 +140,6 @@ export const createCategoryPages = async (
         pageNumber += 1;
     }
     return pages;
-};
-
-export const ensureImagesLoaded = async (container: HTMLElement) => {
-    const images = Array.from(container.querySelectorAll("img"));
-    await Promise.all(
-        images.map(img => {
-            if (img.complete) return Promise.resolve();
-            return new Promise<void>(resolve => {
-                img.addEventListener("load", () => resolve(), { once: true });
-                img.addEventListener("error", () => resolve(), { once: true });
-            });
-        })
-    );
 };
 
 export const groupPairedByPrefix = (

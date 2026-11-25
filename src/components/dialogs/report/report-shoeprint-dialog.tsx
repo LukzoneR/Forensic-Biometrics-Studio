@@ -73,7 +73,7 @@ export function ReportShoeprintDialog({
         setAddressLine4(reportDefaults?.addressLine4 ?? "");
         setReportLanguage(i18n.language);
         setReportTitle(t("Shoeprint report title", { ns: "report" }));
-    }, [isOpen, reportDefaults]);
+    }, [isOpen, reportDefaults, t]);
 
     const workingMode = WorkingModeStore.use(state => state.workingMode);
     const markingsLeft = MarkingsStore(CANVAS_ID.LEFT).use(
@@ -119,6 +119,7 @@ export function ReportShoeprintDialog({
             toast.success(t("Report generated", { ns: "tooltip" }));
             setIsOpen(false);
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error(error);
             const message =
                 error instanceof Error ? error.message : String(error);

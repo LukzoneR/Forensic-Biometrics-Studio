@@ -25,6 +25,22 @@ const buildDistanceFormatter = (run: ShoeprintComparisonRun) => {
     return (value: number) => `${formatNumber(value / unitsPerMm)} mm`;
 };
 
+const resolveAgreementLabel = (
+    agreement: "strong" | "moderate" | "weak",
+    tKeywords: KeywordsT
+): string => {
+    switch (agreement) {
+        case "strong":
+            return tKeywords("Strong agreement");
+        case "moderate":
+            return tKeywords("Moderate agreement");
+        case "weak":
+            return tKeywords("Weak agreement");
+        default:
+            return "";
+    }
+};
+
 export const createComparisonPages = (
     run: ShoeprintComparisonRun,
     firstPageNumber: number,
@@ -37,11 +53,7 @@ export const createComparisonPages = (
     const formatDistance = buildDistanceFormatter(run);
 
     const agreement = describeAgreement(summary);
-    const agreementLabel = {
-        strong: tKeywords("Strong agreement"),
-        moderate: tKeywords("Moderate agreement"),
-        weak: tKeywords("Weak agreement"),
-    }[agreement];
+    const agreementLabel = resolveAgreementLabel(agreement, tKeywords);
 
     const regionRows = result.regions
         .map(
