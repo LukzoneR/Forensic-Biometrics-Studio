@@ -37,11 +37,14 @@ export const createComparisonPages = (
     const formatDistance = buildDistanceFormatter(run);
 
     const agreement = describeAgreement(summary);
-    const agreementLabel = {
-        strong: tKeywords("Strong agreement"),
-        moderate: tKeywords("Moderate agreement"),
-        weak: tKeywords("Weak agreement"),
-    }[agreement];
+    const getAgreementLabel = (
+        level: "strong" | "moderate" | "weak"
+    ): string => {
+        if (level === "strong") return tKeywords("Strong agreement");
+        if (level === "moderate") return tKeywords("Moderate agreement");
+        return tKeywords("Weak agreement");
+    };
+    const agreementLabel = getAgreementLabel(agreement);
 
     const regionRows = result.regions
         .map(
@@ -144,7 +147,7 @@ export const createComparisonPages = (
         const figurePage = createPage();
         figurePage.innerHTML = `
             <div class="fig-label">${tReport("Shoeprint comparison title")}</div>
-            <div class="fig"><img src="${run.plotDataUrl}" /></div>
+            <div class="fig"><img src="${run.plotDataUrl}" alt="${tReport("Shoeprint comparison figure")}" /></div>
             <div class="fig-caption">${tReport("Shoeprint comparison figure")}</div>
             ${createFooter(firstPageNumber + 1, reportId, tReport)}
         `;
