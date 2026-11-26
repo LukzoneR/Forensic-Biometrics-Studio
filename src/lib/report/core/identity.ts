@@ -1,0 +1,58 @@
+import { getVersion } from "@tauri-apps/api/app";
+import { GlobalSettingsStore } from "@/lib/stores/GlobalSettings";
+import { formatReportDateTime, md5String } from "../report-utils";
+import { decodeUnicodeEscapes } from "./dom-builder";
+import { getSystemId } from "./viewport-loader";
+import type { ImageMeta, ReportIdentity, ReportMetadataOptions } from "./types";
+
+export const buildReportIdentity = async (
+    options: ReportMetadataOptions,
+    leftMeta: ImageMeta,
+    rightMeta: ImageMeta
+): Promise<ReportIdentity> => {
+    const reportSettings = GlobalSettingsStore.state.settings.report;
+    const reportDateTime =
+        options.reportDateTime?.trim() || formatReportDateTime(new Date());
+    const systemId = await getSystemId();
+    const reportId = md5String(
+        [
+            reportDateTime,
+            leftMeta.sizeBytes,
+            leftMeta.checksum,
+            rightMeta.sizeBytes,
+            rightMeta.checksum,
+            systemId,
+        ].join("|")
+    );
+
+    const performedBy = decodeUnicodeEscapes(
+        options.performedBy?.trim() || reportSettings?.performedBy || "-"
+    );
+    const department = decodeUnicodeEscapes(
+        options.department?.trim() || reportSettings?.department || "-"
+    );
+    const addressFallback = [
+        reportSettings?.addressLine1,
+        reportSettings?.addressLine2,
+        reportSettings?.addressLine3,
+        reportSettings?.addressLine4,
+    ]
+        .map(line => line?.trim())
+        .filter(Boolean) as string[];
+    const addressLines =
+        options.addressLines?.map(line => line.trim()).filter(Boolean) ?? [];
+    const address = (
+        addressLines.length > 0 ? addressLines : addressFallback
+    ).map(line => decodeUnicodeEscapes(line));
+
+    const appVersion = await getVersion();
+
+    return {
+        reportId,
+        reportDateTime,
+        performedBy,
+        department,
+        address,
+        appVersion,
+    };
+};

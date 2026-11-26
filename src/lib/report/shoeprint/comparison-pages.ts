@@ -37,11 +37,12 @@ export const createComparisonPages = (
     const formatDistance = buildDistanceFormatter(run);
 
     const agreement = describeAgreement(summary);
-    const agreementLabel = {
-        strong: tKeywords("Strong agreement"),
-        moderate: tKeywords("Moderate agreement"),
-        weak: tKeywords("Weak agreement"),
-    }[agreement];
+    let agreementLabel = tKeywords("Weak agreement");
+    if (agreement === "strong") {
+        agreementLabel = tKeywords("Strong agreement");
+    } else if (agreement === "moderate") {
+        agreementLabel = tKeywords("Moderate agreement");
+    }
 
     const regionRows = result.regions
         .map(
